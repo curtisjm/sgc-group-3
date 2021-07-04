@@ -26,10 +26,15 @@ void setup() {
 }
 
 void loop() {
+	// assign distances from each sensor to their respective variables
 	rightDistance = getDistance(trigPinRight, echoPinRight);
 	leftDistance = getDistance(trigPinLeft, echoPinLeft);
 
-	Serial.println("R: " + String(rightDistance) + " L: " + String(leftDistance));
+	// output distances to serial monitor
+	Serial.println("R: " + String(rightDistance) + "	L: " + String(leftDistance));
+
+	// wait 50ms between readings
+	delay(50);
 }
 
 float getDistance(const int trigPin, const int echoPin) {
