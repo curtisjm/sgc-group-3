@@ -10,7 +10,7 @@ const int AIN1 = 13;
 const int AIN2 = 12;
 // speed control pin on the motor driver for the right motor
 const int PWMA = 11;
-
+ 
 // left motor controlled by motor B pins on driver
 // control pin 1 on the motor driver for the left motor
 const int BIN1 = 10;
@@ -22,7 +22,7 @@ const int PWMB = 8;
 // speed to drive the motors at when moving forward
 const int forwardMotorSpeed = 255; 
 // speed to drive the motors at when moving backward 
-const int forwardMotorSpeed = -255; 
+const int backwardMotorSpeed = -255; 
 
 // front distance sensor
 const int trigPinFront = 0;
