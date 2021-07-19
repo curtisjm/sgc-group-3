@@ -38,19 +38,15 @@ void loop() {
 }
 
 float getDistance(const int trigPin, const int echoPin) {
-	// variable to store the time it takes for a ping to bounce off an object
-	float echoTime;
-	float calculatedDistance;
-
-	// send out an ultrasonic pulse that's 10ms long
+	// send an ultrasonic pulse that's 10ms long
 	digitalWrite(trigPin, HIGH);
 	delayMicroseconds(10);
 	digitalWrite(trigPin, LOW);
 
 	// check how long it takes for the pulse to come back to the sensor
-	echoTime = pulseIn(echoPin, HIGH);
+	float echoTime = pulseIn(echoPin, HIGH);
 	// calculate the distance of the object that reflected the pulse
-	calculatedDistance = echoTime / 148.0;
+	float calculatedDistance = echoTime / 148.0;
 
 	return calculatedDistance;
 }
