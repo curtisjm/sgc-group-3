@@ -3,6 +3,27 @@
 // include the servo library
 #include <Servo.h>
 
+// right motor controlled by motor A pins on driver
+// control pin 1 on the motor driver for the right motor
+const int AIN1 = 13;
+// control pin 2 on the motor driver for the right motor
+const int AIN2 = 12;
+// speed control pin on the motor driver for the right motor
+const int PWMA = 11;
+
+// left motor controlled by motor B pins on driver
+// control pin 1 on the motor driver for the left motor
+const int BIN1 = 10;
+// control pin 2 on the motor driver for the left motor
+const int BIN2 = 9;
+// speed control pin on the motor driver for the left motor
+const int PWMB = 8;
+
+// speed to drive the motors at when moving forward
+const int forwardMotorSpeed = 255; 
+// speed to drive the motors at when moving backward 
+const int forwardMotorSpeed = -255; 
+
 // front distance sensor
 const int trigPinFront = 0;
 const int echoPinFront = 0;
@@ -24,7 +45,7 @@ float leftDistance = 0;
 Servo servo;
 
 // position when the servo is centered
-int servoCenterPosition = 90;
+const int servoCenterPosition = 90;
 
 void setup() {
 	// trig pin outputs pulses of electricity
@@ -40,6 +61,10 @@ void setup() {
 	servo.attach(9);
 	// set servo to initial position
 	servo.write(servoCenterPosition);
+
+	// initial forward motion
+	rightMotor(forwardMotorSpeed);
+	leftMotor(forwardMotorSpeed);
 
 	// 115200 is for VS Code
 	Serial.begin(115200);
@@ -89,4 +114,46 @@ float getDistance(const int trigPin, const int echoPin) {
 	float calculatedDistance = echoTime / 148.0;
 
 	return calculatedDistance;
+}
+
+// function for driving the right motor
+void rightMotor(int motorSpeed) {
+	// for moving forward
+	if(motorSpeed > 0) {
+		digitalWrite(AIN1, HIGH);
+		digitalWrite(AIN2, LOW);
+	}
+	// for moving backward
+	else if(motorSpeed < 0) {
+		digitalWrite(AIN1, LOW);
+		digitalWrite(AIN2, HIGH);
+	}
+	// for stopping the motor
+	else {
+		digitalWrite(AIN1, LOW);
+		digitalWrite(AIN2, LOW);
+	}
+	// drive motor in the previously determined direction at the given speed
+	analogWrite(PWMA, abs(motorSpeed));
+}
+
+// function for driving the left motor
+void leftMotor(int motorSpeed) {
+	// for moving forward
+	if(motorSpeed > 0) {
+		digitalWrite(BIN1, HIGH);
+		digitalWrite(BIN2, LOW);
+	}
+	// for moving backward
+	else if(motorSpeed < 0) {
+		digitalWrite(BIN1, LOW);
+		digitalWrite(BIN2, HIGH);
+	}
+	// for stopping the motor
+	else {
+		digitalWrite(BIN1, LOW);
+		digitalWrite(BIN2, LOW);
+	}
+	// drive motor in the previously determined direction at the given speed
+	analogWrite(PWMB, abs(motorSpeed));
 }
