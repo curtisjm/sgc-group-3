@@ -24,14 +24,11 @@ void setup() {
 
 void loop() {
 	moveForward();
-	delay(1000);
-	stop();
-	moveForward();	
 }
 
 void moveForward() {
-	rightMotor(255);
-	leftMotor(255);
+	rightMotor(1000);
+	leftMotor(1000);
 }
 
 void moveBackward() {
