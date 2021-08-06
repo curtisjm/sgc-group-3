@@ -69,12 +69,13 @@ void setup() {
 	leftMotor(forwardMotorSpeed);
 
 	// 115200 is for VS Code
-	Serial.begin(115200);
+	// Serial.begin(115200);
 	// change to 9600 if using Arduino IDE
-	// Serial.begin(9600);
+	Serial.begin(9600);
 }
 
 void loop() {
+	Serial.println("Start of loop...");
 	moveForward();
 
 	// assign distances from front sensor to its variable
@@ -99,7 +100,9 @@ void loop() {
 		// if there is more room on the left
 		if(rightDistance < leftDistance) {
 			// turn car until there is a free path ahead
-			while((frontDistance - newDistance) < 10) {
+			while((newDistance - frontDistance) < 10) {
+				Serial.println("In left turn loop...");
+				Serial.println("1:" + String(frontDistance) + "2:" + String(newDistance));
 				turnLeft();
 				delay(TURN_DELAY);
 				newDistance = getDistance(trigPinFront, echoPinFront);
@@ -107,7 +110,9 @@ void loop() {
 		// if there is more room on the right
 		} else {
 			// turn car until there is a free path ahead
-			while((frontDistance - newDistance) < 10) {
+			while((newDistance - frontDistance) < 10) {
+				Serial.println("In right turn loop...");
+				Serial.println("1:" + String(frontDistance) + "2:" + String(newDistance));
 				turnRight();
 				delay(TURN_DELAY);
 				newDistance = getDistance(trigPinFront, echoPinFront);
