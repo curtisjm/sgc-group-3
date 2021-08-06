@@ -24,6 +24,9 @@ void setup() {
 
 void loop() {
 	moveForward();
+	delay(1000);
+	stop();
+	moveForward();	
 }
 
 void moveForward() {
