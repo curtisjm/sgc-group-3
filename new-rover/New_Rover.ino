@@ -19,11 +19,6 @@ const int BIN2 = 9;
 // speed control pin on the motor driver for the left motor
 const int PWMB = 8;
 
-// speed to drive the motors at when moving forward
-const int forwardMotorSpeed = 255; 
-// speed to drive the motors at when moving backward 
-const int backwardMotorSpeed = -255; 
-
 // front distance sensor
 const int trigPinFront = 6;
 const int echoPinFront = 5;
@@ -45,7 +40,7 @@ float leftDistance = 0;
 Servo servo;
 
 // position when the servo is centered
-const int servoCenterPosition = 90;
+const int SERVO_CENTER_POS = 90;
 
 const int TURN_DELAY = 200;
 
@@ -59,14 +54,10 @@ void setup() {
 	pinMode(trigPinLeft, OUTPUT);
 	pinMode(echoPinLeft, INPUT);
 
-	// tell the servo object which pin the servo is plugged into
-	servo.attach(9);
-	// set servo to initial position
-	servo.write(servoCenterPosition);
-
-	// initial forward motion
-	rightMotor(forwardMotorSpeed);
-	leftMotor(forwardMotorSpeed);
+	// // tell the servo object which pin the servo is plugged into
+	// servo.attach(9);
+	// // set servo to initial position
+	// servo.write(SERVO_CENTER_POS);
 
 	// 115200 is for VS Code
 	Serial.begin(115200);
