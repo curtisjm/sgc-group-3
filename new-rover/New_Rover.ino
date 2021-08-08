@@ -69,9 +69,11 @@ void setup() {
 	leftMotor(forwardMotorSpeed);
 
 	// 115200 is for VS Code
-	// Serial.begin(115200);
+	Serial.begin(115200);
 	// change to 9600 if using Arduino IDE
-	Serial.begin(9600);
+	// Serial.begin(9600);
+	
+	Serial.println("Setup complete.");
 }
 
 void loop() {
@@ -94,8 +96,10 @@ void loop() {
 		// output side distances to serial monitor
 		Serial.println("R: " + String(rightDistance) + "	L: " + String(leftDistance));
 		
-		// variable used to 
+		// variable used to keep track of distance as the rover is rotating
 		float newDistance = getDistance(trigPinFront, echoPinFront);
+		// keep track of how long the rover turns so it can get back on a straight track
+		float turnTime = 0;
 
 		// if there is more room on the left
 		if(rightDistance < leftDistance) {

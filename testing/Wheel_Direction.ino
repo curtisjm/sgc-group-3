@@ -1,3 +1,4 @@
+// used to get wheels on the car turning in the right directions
 
 // right motor controlled by motor A pins on driver
 // control pin 1 on the motor driver for the right motor
