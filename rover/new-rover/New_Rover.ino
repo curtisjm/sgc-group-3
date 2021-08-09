@@ -83,6 +83,7 @@ void loop() {
 		float turnTime = 0;
 		// get initial time reading
 		lastTime = millis();
+		// remember which direction the rover turned so we can go back the opposite dierection
 		bool didTurnLeft;
 
 		// if there is more room on the left
@@ -95,6 +96,7 @@ void loop() {
 				turnLeft();
 				delay(TURN_DELAY);
 				newDistance = getDistance(trigPinFront, echoPinFront);
+				// keep track of how long we are in the turn loop by adding the time change onto turnTime
 				turnTime += (millis() - lastTime);
 				lastTime = millis();
 			}
@@ -108,6 +110,7 @@ void loop() {
 				turnRight();
 				delay(TURN_DELAY);
 				newDistance = getDistance(trigPinFront, echoPinFront);
+				// keep track of how long we are in the turn loop by adding the time change onto turnTime
 				turnTime += (millis() - lastTime);
 				lastTime = millis();
 			}
@@ -123,8 +126,15 @@ void loop() {
 			lastTime = millis();
 		}
 		stop();
-		// even car back out
+		// turn car back toward original line
 		didTurnLeft ? turnRight() : turnLeft();
+		delay(turnTime * 2);
+		// travel same distance forward as before to get back on line
+		moveForward();
+		delay(forwardTime);
+		stop();
+		// turn back forward
+		didTurnLeft ? turnLeft() : turnRight();
 		delay(turnTime);
 		stop();
 	}
