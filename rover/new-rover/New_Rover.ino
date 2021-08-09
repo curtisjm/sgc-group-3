@@ -35,6 +35,7 @@ float leftDistance = 0;
 
 // how long to wait before getting new distance in a turn
 const int TURN_DELAY = 200;
+const int STOP_TIME = 400;
 
 // used to keep track of last recorded time in turn loop
 float lastTime = 0;
