@@ -1,8 +1,5 @@
 // code for rover
 
-// include the servo library
-#include <Servo.h>
-
 // right motor controlled by motor A pins on driver
 // control pin 1 on the motor driver for the right motor
 const int AIN1 = 13;
@@ -28,19 +25,13 @@ const int trigPinRight = 3;
 const int echoPinRight = 2;
 
 // left distance censor
-const int trigPinLeft = 1;
-const int echoPinLeft = 0;
+const int trigPinLeft = 7;
+const int echoPinLeft = 4;
 
 // initialize distance tracking variables
 float frontDistance = 0;
 float rightDistance = 0;
 float leftDistance = 0;
-
-// create a servo object
-Servo servo;
-
-// position when the servo is centered
-const int SERVO_CENTER_POS = 90;
 
 // how long to wait before getting new distance in a turn
 const int TURN_DELAY = 200;
@@ -57,11 +48,6 @@ void setup() {
 	pinMode(echoPinRight, INPUT);
 	pinMode(trigPinLeft, OUTPUT);
 	pinMode(echoPinLeft, INPUT);
-
-	// // tell the servo object which pin the servo is plugged into
-	// servo.attach(9);
-	// // set servo to initial position
-	// servo.write(SERVO_CENTER_POS);
 
 	// 115200 is for VS Code
 	Serial.begin(115200);
@@ -82,7 +68,7 @@ void loop() {
 	Serial.println("Front: " + String(frontDistance));
 
 	// once distance is less than our chosen threshold
-	if(frontDistance < 50) {
+	if(frontDistance < 20) {
 		stop();
 		// check distances on either side of rover to see which direction has more room to travel towards
 		rightDistance = getDistance(trigPinRight, echoPinRight);
@@ -105,7 +91,7 @@ void loop() {
 			// turn car until there is a free path ahead
 			while((newDistance - frontDistance) < 10) {
 				Serial.println("In left turn loop...");
-				Serial.println("1:" + String(frontDistance) + "2:" + String(newDistance));
+				Serial.println("Original:" + String(frontDistance) + "	New:" + String(newDistance));
 				turnLeft();
 				delay(TURN_DELAY);
 				newDistance = getDistance(trigPinFront, echoPinFront);
@@ -118,7 +104,7 @@ void loop() {
 			// turn car until there is a free path ahead
 			while((newDistance - frontDistance) < 10) {
 				Serial.println("In right turn loop...");
-				Serial.println("1:" + String(frontDistance) + "2:" + String(newDistance));
+				Serial.println("Original:" + String(frontDistance) + "	New:" + String(newDistance));
 				turnRight();
 				delay(TURN_DELAY);
 				newDistance = getDistance(trigPinFront, echoPinFront);
@@ -127,8 +113,16 @@ void loop() {
 			}
 		}
 		stop();
-		moveForward();
-		delay(1000);
+		float forwardTime = 0;
+		lastTime = millis();
+		while(leftDistance < 10 && rightDistance < 10) {
+			moveForward();
+			rightDistance = getDistance(trigPinRight, echoPinRight);
+			leftDistance = getDistance(trigPinLeft, echoPinLeft);
+			forwardTime += (millis() - lastTime);
+			lastTime = millis();
+		}
+		stop();
 		// even car back out
 		didTurnLeft ? turnRight() : turnLeft();
 		delay(turnTime);
