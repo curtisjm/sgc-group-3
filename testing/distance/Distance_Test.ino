@@ -1,51 +1,46 @@
 // testing the distance censors to check accuracy and how to interface with multiple of them
 
-// right distance sensor
-const int trigPinRight = 11;
-const int echoPinRight = 12;
+const int trigPinFront = 6;
+const int echoPinFront = 5;
 
-// left distance censor
-const int trigPinLeft = 5;
-const int echoPinLeft = 6;
+const int trigPinRight = 3;
+const int echoPinRight = 2;
 
-// initialize distance tracking variables
+const int trigPinLeft = 7;
+const int echoPinLeft = 4;
+
+float frontDistance = 0;
 float rightDistance = 0;
 float leftDistance = 0;
 
 void setup() {
-	// trig pin outputs pulses of electricity
-	// echo pin measures duration of pulses coming back
+	pinMode(trigPinFront, OUTPUT);
+	pinMode(echoPinFront, INPUT);
 	pinMode(trigPinRight, OUTPUT);
 	pinMode(echoPinRight, INPUT);
 	pinMode(trigPinLeft, OUTPUT);
 	pinMode(echoPinLeft, INPUT);
 
-	// change to 9600 if using Arduino IDE
-	// 115200 is for VS Code
 	Serial.begin(115200);
 }
 
 void loop() {
-	// assign distances from each sensor to their respective variables
+	frontDistance = getDistance(trigPinFront, echoPinFront);
 	rightDistance = getDistance(trigPinRight, echoPinRight);
 	leftDistance = getDistance(trigPinLeft, echoPinLeft);
 
-	// output distances to serial monitor
+	Serial.println("Front: " + String(frontDistance));
 	Serial.println("R: " + String(rightDistance) + "	L: " + String(leftDistance));
 
-	// wait 50ms between readings
 	delay(50);
 }
 
 float getDistance(const int trigPin, const int echoPin) {
-	// send an ultrasonic pulse that's 10ms long
 	digitalWrite(trigPin, HIGH);
 	delayMicroseconds(10);
 	digitalWrite(trigPin, LOW);
 
-	// check how long it takes for the pulse to come back to the sensor
 	float echoTime = pulseIn(echoPin, HIGH);
-	// calculate the distance of the object that reflected the pulse
 	float calculatedDistance = echoTime / 148.0;
 
 	return calculatedDistance;

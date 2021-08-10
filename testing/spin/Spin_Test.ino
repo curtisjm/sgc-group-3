@@ -17,18 +17,19 @@ const int BIN2 = 9;
 const int PWMB = 8;
 
 void setup() {
-
 	// 115200 is for VS Code
 	Serial.begin(115200);
-	// change to 9600 if using Arduino IDE
-	// Serial.begin(9600);
-	turnLeft();
-	
-	Serial.println("Setup complete.");
 }
 
 void loop() {
 	turnLeft();
+	delay(2000);
+	stop();
+	delay(500);
+	turnRight();
+	delay(2000);
+	stop();
+	delay(500);
 }
 
 void moveForward() {

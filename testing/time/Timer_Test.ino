@@ -13,7 +13,6 @@ void loop() {
 	Serial.println("here");
 
 	while(x > 0) {
-
 		Serial.println("LT: " + String(loopTime));
 		x--;
 		loopTime += (millis() - time);

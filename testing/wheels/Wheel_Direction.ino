@@ -18,9 +18,9 @@ const int PWMB = 8;
 
 void setup() {
 	// 115200 is for VS Code
-	// Serial.begin(115200);
+	Serial.begin(115200);
 	// change to 9600 if using Arduino IDE
-	Serial.begin(9600);
+	// Serial.begin(9600);
 }
 
 void loop() {

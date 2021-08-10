@@ -29,7 +29,7 @@ const int trigPinLeft = 7;
 const int echoPinLeft = 4;
 
 // how long to wait before getting new distance in a turn
-const int TURN_DELAY = 10;
+const int TURN_DELAY = 400;
 const int STOP_TIME = 1000;
 
 // keep track of how long the rover turns so it can get back on a straight track
@@ -47,7 +47,7 @@ float leftDistance = 0;
 float newDistance = 0;
 
 // remember which direction the rover turned so we can go back the opposite dierection
-bool didTurnLeft;
+bool didTurnLeft = true;
 
 void setup() {
 	// trig pin outputs pulses of electricity
@@ -69,12 +69,9 @@ void setup() {
 
 void loop() {
 	Serial.println("Start of loop...");
-	moveForward(0);
 
 	// assign distances from front sensor to its variable
 	frontDistance = getDistance(trigPinFront, echoPinFront);
-
-	// output front distance to serial monitor
 	Serial.println("Front: " + String(frontDistance));
 
 	// once distance is less than our chosen threshold
@@ -93,11 +90,15 @@ void loop() {
 		// passObstacle();
 		// moveBackOnLine();
 	}
+
+	moveForward(400);
 }
 
 void rotateRover() {
+	Serial.println("Rotating rover...");
 	// variable used to keep track of distance as the rover is rotating
 	newDistance = getDistance(trigPinFront, echoPinFront);
+	Serial.println("New: " + String(newDistance));
 	// keep track of how long the rover turns so it can get back on a straight track
 	turnTime = 0;
 	// get initial time reading
