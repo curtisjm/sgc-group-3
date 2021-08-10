@@ -61,6 +61,7 @@ void loop() {
 	} else {
 		stop();
 	}
+	delay(400);
 }
 
 void moveForward() {

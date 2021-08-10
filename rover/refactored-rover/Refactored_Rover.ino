@@ -29,7 +29,7 @@ const int trigPinLeft = 7;
 const int echoPinLeft = 4;
 
 // how long to wait before getting new distance in a turn
-const int TURN_DELAY = 400;
+const int TURN_DELAY = 200;
 const int STOP_TIME = 1000;
 
 // keep track of how long the rover turns so it can get back on a straight track
