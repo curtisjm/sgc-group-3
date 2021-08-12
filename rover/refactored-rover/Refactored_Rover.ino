@@ -87,8 +87,8 @@ void loop() {
 		didTurnLeft = (rightDistance < leftDistance) ? true : false;
 
 		rotateRover();
-		// passObstacle();
-		// moveBackOnLine();
+		passObstacle();
+		moveBackOnLine();
 	}
 
 	moveForward(400);
